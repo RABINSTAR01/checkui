@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>Angular CRUD</h1>
+  <div class="cards-container">
+    <div class="cards-form">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" >
+        <div class="form-group">
+          <label for="">Card Name</label>
+          <input type="text" name="cardName" [(ngModel)]="card.cardholderName" placeholder="Enter your Card Name"  required/>
+          <span *ngIf="form.controls['cardName'].errors?.['required'] && form.controls['cardName'].touched">Name is Required </span>
+        </div>
+        <div class="form-group">
+          <label for="">Card Number</label>
+          <input type="text" name="cardNumber"  [(ngModel)]="card.cardNumber" required minlength="16" maxlength="16" placeholder="Enter your Card Number"/>
+          <span *ngIf="form.controls['cardNumber'].errors?.['required'] && form.controls['cardNumber'].touched">Enter your 16 digits cardNumber </span>
+          <span *ngIf="form.controls['cardNumber'].errors?.['minlength'] && form.controls['cardNumber'].dirty">complte your 16 digits cardNumber </span>
+        </div>
+        <div class="form-group form-inline">
+          <div>
+            <label for="">CVC</label>
+            <input type="password" name="CVC"  [(ngModel)]="card.cvc" required minlength="3" maxlength="3" placeholder="ex:123"/>
+            <span *ngIf="form.controls['CVC'].errors?.['required'] && form.controls['CVC'].touched">CVC Number required</span>
+            <span *ngIf="form.controls['CVC'].errors?.['minlength'] && form.controls['CVC'].dirty">Enter your 3 digits CVC Number </span>
+          </div>
+          <div>
+            <label for="">Expiry Month</label>   
+            <input type="text" name="expiryMonth" [(ngModel)]="card.expiryMonth" required minlength="1" maxlength="2" placeholder="1-12" />
+            <span *ngIf="form.controls['expiryMonth'].errors?.['required'] && form.controls['expiryMonth'].touched">Month Required</span>
+          </div>
+       <div>
+            <label for="">Expiry Year</label>
+            <input type="text" name="expiryYear" [(ngModel)]="card.expiryYear" required  placeholder="2023-2045" maxlength="4"/>
+            <span *ngIf="form.controls['expiryYear'].errors?.['required'] && form.controls['expiryYear'].touched">Enter Your expiryYear</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="form.invalid" [ngClass]="form.invalid ? 'red' : 'green' ">Save</button>
+        </div>
+        <div class="reset">
+          <button type="reset"  class="reset-btn"><i class="fa fa-refresh" aria-hidden="true" (click)="form.reset()"></i> Reset</button>
+        </div>
+        
+
+      </form>
+    </div>
+    
+    <div class="cards-grid">
+
+      <div class="card-row" *ngFor="let card of cards">
+      <div (click)="updated (card)" class="card-row-details">
+        <span>{{card.cardholderName}}</span>
+        <span>{{card.cardNumber}}</span>
+      </div>
+      <div class="card-row-actions">
+        <a (click)="deleteCard(card.id)"><i class="fa-sharp fa-solid fa-trash-can"></i></a>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
